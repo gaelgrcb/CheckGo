@@ -50,6 +50,16 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
     }
   }
 
+  @override
+  Future<List<AttendanceRecord>> getRecentRecords({int limit = 10}) async {
+    return await localDataSource.getRecentRecords(limit: limit);
+  }
+
+  @override
+  Future<int> getPendingCount() async {
+    return await localDataSource.getPendingCount();
+  }
+
   AttendanceRecord _signRecord(AttendanceRecord record) {
     const secret = "atp_secure_salt_2023"; 
     var bytes = utf8.encode('${record.id}${record.timestamp.toIso8601String()}$secret');

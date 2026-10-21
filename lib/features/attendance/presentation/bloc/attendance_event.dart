@@ -1,5 +1,7 @@
 abstract class AttendanceEvent {}
 
+class LoadAttendanceDataEvent extends AttendanceEvent {}
+
 class RegisterCheckInEvent extends AttendanceEvent {
   final String userId;
   final String branchId;

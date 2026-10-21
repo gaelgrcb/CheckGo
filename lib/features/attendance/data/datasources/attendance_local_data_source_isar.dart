@@ -36,4 +36,22 @@ class AttendanceLocalDataSourceIsar implements AttendanceLocalDataSource {
         .findAll();
     return pendingIsarRecords.map((r) => r.toDomain()).toList();
   }
+
+  @override
+  Future<List<AttendanceRecord>> getRecentRecords({int limit = 10}) async {
+    final recentIsarRecords = await isar.attendanceRecordIsars
+        .where()
+        .sortByTimestampDesc()
+        .limit(limit)
+        .findAll();
+    return recentIsarRecords.map((r) => r.toDomain()).toList();
+  }
+
+  @override
+  Future<int> getPendingCount() async {
+    return await isar.attendanceRecordIsars
+        .filter()
+        .syncStatusEqualTo(SyncStatus.pending)
+        .count();
+  }
 }
